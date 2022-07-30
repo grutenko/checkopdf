@@ -13,7 +13,7 @@
       <a href="https://gitlab.com/pages/">Other Examples</a>
     </div>
 
-
+<button onclick="getData">kjhklj</button>
     <form>
       
     </form>
@@ -70,9 +70,12 @@ async function fetchMoviesBadStatus() {
   const movies = await response.json();
   return movies;
 }
+
+function getData(){
 fetchMoviesBadStatus().catch(error => {
   error.message; // 'An error has occurred: 404'
 });
+}
 </script>
 
   </body>
