@@ -13,11 +13,21 @@
       <a href="https://gitlab.com/pages/">Other Examples</a>
     </div>
 
+
     <h1>Hello World!</h1>
 
     <p>
       This is a simple plain-HTML website on GitLab Pages, without any fancy static site generator.
     </p>
+
+<script>
+  const APIKey = "sYoECmKTCXlTF19D";
+  const APIRoot = "https://api.checko.ru/v2/search?key="+APIKey+"&"
+  fetch(APIRoot + "by=name&obj=org&query=пао ростелеком")
+    .then(response => response.json())
+    .then(json => console.log(json))
+</script>
+
   </body>
 </html>
 
