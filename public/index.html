@@ -30,7 +30,7 @@ const APIRoot = "https://api.checko.ru/v2/search?key="+APIKey+"&"
 
 async function fetchMoviesBadStatus() {
  
-  const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком');
+  const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {method: 'GET', mode: 'no-cors'});
   if (!response.ok) {
     console.log('error');
     const message = `An error has occured: ${response.status}`;
