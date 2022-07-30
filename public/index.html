@@ -39,7 +39,22 @@
 //      .then(json => console.log(json)) 
 
 
-try {
+//try {
+//  const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
+//    method: 'GET',
+//    mode: 'no-cors',
+//    headers: {
+//       'Content-Type': 'application/json',
+//    }
+//  });
+
+//  const res = await response.json();
+//  console.log('Успех:', JSON.stringify(res));
+//} catch (error) {
+//  console.error('Ошибка:', error);
+//}
+
+async function fetchMoviesBadStatus() {
   const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
     method: 'GET',
     mode: 'no-cors',
@@ -47,13 +62,16 @@ try {
        'Content-Type': 'application/json',
     }
   });
-
-  const res = await response.json();
-  console.log('Успех:', JSON.stringify(res));
-} catch (error) {
-  console.error('Ошибка:', error);
+  if (!response.ok) {
+    const message = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
+  const movies = await response.json();
+  return movies;
 }
-
+fetchMoviesBadStatus().catch(error => {
+  error.message; // 'An error has occurred: 404'
+});
 </script>
 
   </body>
