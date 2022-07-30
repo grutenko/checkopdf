@@ -30,7 +30,7 @@
 
 async function fetchMoviesBadStatus() {
   console.log('werwerer');
-  const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
+  const response = fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
     method: 'GET',
     mode: 'no-cors',
     credentials: 'include',
