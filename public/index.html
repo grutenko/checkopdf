@@ -48,8 +48,8 @@ try {
     }
   });
 
-  const result = await response.json();
-  console.log('Успех:', JSON.stringify(result));
+  const res = await response.json();
+  console.log('Успех:', JSON.stringify(res));
 } catch (error) {
   console.error('Ошибка:', error);
 }
