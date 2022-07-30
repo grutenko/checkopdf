@@ -24,35 +24,9 @@
     </div>
 
 <script>
-  //const APIKey = "sYoECmKTCXlTF19D";
-  const APIKey = 'AiBEDldGmvLAzdp3';
-  //const APIRoot = 'https://api.checko.ru/v2/search?key='+APIKey+'&'
-  //fetch(APIRoot + "by=name&obj=org&query=пао ростелеком", {method: "GET", mode:'cors', credentials:'include'})
-//  fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
-//        method: 'GET',
-//        mode: 'no-cors',
-//        credentials: 'include',
-//        headers: {
-//        'Content-Type': 'application/json',
-//      },
-//      }).then((resp) => resp.json())
-//      .then(json => console.log(json)) 
+  const APIKey = "sYoECmKTCXlTF19D";
+  // const APIKey = 'AiBEDldGmvLAzdp3';
 
-
-//try {
-//  const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
-//    method: 'GET',
-//    mode: 'no-cors',
-//    headers: {
-//       'Content-Type': 'application/json',
-//    }
-//  });
-
-//  const res = await response.json();
-//  console.log('Успех:', JSON.stringify(res));
-//} catch (error) {
-//  console.error('Ошибка:', error);
-//}
 
 async function fetchMoviesBadStatus() {
   const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
