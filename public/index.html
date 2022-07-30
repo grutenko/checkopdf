@@ -23,7 +23,7 @@
 <script>
   const APIKey = "sYoECmKTCXlTF19D";
   const APIRoot = "https://api.checko.ru/v2/search?key="+APIKey+"&"
-  fetch(APIRoot + "by=name&obj=org&query=пао ростелеком")
+  fetch(APIRoot + "by=name&obj=org&query=пао ростелеком", {method: "GET", body: data, mode:'cors', credentials:'include'})
     .then(response => response.json())
     .then(json => console.log(json))
 </script>
