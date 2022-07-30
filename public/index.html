@@ -29,6 +29,7 @@
 
 
 async function fetchMoviesBadStatus() {
+  console.log('werwerer');
   const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
     method: 'GET',
     mode: 'no-cors',
@@ -42,7 +43,7 @@ async function fetchMoviesBadStatus() {
     throw new Error(message);
   }
   const movies = await response.json();
-    console.log('werwerer');
+    
   console.log(movies);
   return movies;
 }
