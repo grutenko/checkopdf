@@ -30,14 +30,7 @@
 
 async function fetchMoviesBadStatus() {
   console.log('werwerer');
-  const response = fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
-    method: 'GET',
-    mode: 'no-cors',
-    credentials: 'include',
-    headers: {
-       'Content-Type': 'application/json',
-    }
-  });
+  const response = fetch(APIRoot + 'by=name&obj=org&query=ростелеком');
   if (!response.ok) {
     console.log('error');
     const message = `An error has occured: ${response.status}`;
