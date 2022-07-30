@@ -68,6 +68,7 @@ async function fetchMoviesBadStatus() {
     throw new Error(message);
   }
   const movies = await response.json();
+  console.log(movies);
   return movies;
 }
 
