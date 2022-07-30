@@ -28,22 +28,26 @@
   const APIKey = 'AiBEDldGmvLAzdp3';
   //const APIRoot = 'https://api.checko.ru/v2/search?key='+APIKey+'&'
   //fetch(APIRoot + "by=name&obj=org&query=пао ростелеком", {method: "GET", mode:'cors', credentials:'include'})
-  fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
-        method: 'GET',
-        mode: 'no-cors',
-        credentials: 'include',
-        headers: {
-        'Content-Type': 'application/json',
-      },
-      }).then((resp) => resp.json())
-      .then(json => console.log(json)) 
+//  fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
+//        method: 'GET',
+//        mode: 'no-cors',
+//        credentials: 'include',
+//        headers: {
+//        'Content-Type': 'application/json',
+//      },
+//      }).then((resp) => resp.json())
+//      .then(json => console.log(json)) 
 
 
 try {
-  const response = await fetch('https://example.com/posts', {
-    method: 'POST',
-    body: formData
+  const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
+    method: 'GET',
+    mode: 'no-cors',
+    headers: {
+       'Content-Type': 'application/json',
+    }
   });
+
   const result = await response.json();
   console.log('Успех:', JSON.stringify(result));
 } catch (error) {
