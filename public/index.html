@@ -58,6 +58,7 @@ async function fetchMoviesBadStatus() {
   const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
     method: 'GET',
     mode: 'no-cors',
+    credentials: 'include',
     headers: {
        'Content-Type': 'application/json',
     }
