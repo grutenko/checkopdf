@@ -35,7 +35,8 @@
         headers: {
         'Content-Type': 'application/json',
       },
-      }).then(response => response.json()).then(json => console.log(json)) 
+      }).then((resp) => resp.json())
+      .then(json => console.log(json)) 
 </script>
 
   </body>
