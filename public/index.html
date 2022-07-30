@@ -29,13 +29,14 @@
 
 
 async function fetchMoviesBadStatus() {
-  console.log('werwerer');
-  const response = fetch(APIRoot + 'by=name&obj=org&query=ростелеком');
+ 
+  const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком');
   if (!response.ok) {
     console.log('error');
     const message = `An error has occured: ${response.status}`;
     throw new Error(message);
   }
+   console.log('werwerer');
   const movies = await response.json();
     
   console.log(movies);
