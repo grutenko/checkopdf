@@ -38,7 +38,7 @@ function getData(){
 var searchword = document.getElementById('searchfield').value;
 var resultList = document.getElementById('resultList');
 console.log(searchword)
-const durl = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + '&by=name&obj=org&active=true&query=' + encodeURIComponent(searchword) );
+const durl = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + '&by=name&obj=org&source=true&active=true&query=' + encodeURIComponent(searchword) );
 
 //exit;
 document.getElementById('durl').innerHTML = durl;
