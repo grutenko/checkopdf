@@ -29,7 +29,7 @@
    const APIKey = 'AiBEDldGmvLAzdp3';
 const APIRoot = `https://api.checko.ru/v2/search?key=` + APIKey
 //const url = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + `by=name&obj=org&query=ростелеком`);
-const durl = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + '&by=name&obj=org&query=ростелеком');
+const durl = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + '&by=name&obj=org&query=' + json.stringify('ростелеком') );
 
   const headers = {
         'Content-Type': 'application/json'
