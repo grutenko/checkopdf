@@ -36,7 +36,7 @@ const url = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + `by=name&obj
 
 //axios.get(url, {mode: 'no-cors'})
 function getData(){
-fetch(url)
+fetch(url, {mode: 'no-cors'})
         .then(function (response) {
           document.getElementById('resultList').innerHTML = response.data;
           console.log(response);
