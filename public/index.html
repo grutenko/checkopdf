@@ -17,7 +17,7 @@
     <form>
       
     </form>
-    <p>
+    <p id="durl">
       This is a simple plain-HTML website on GitLab Pages, without any fancy static site generator.
     </p>
     <div id="resultList">
@@ -37,6 +37,7 @@ const durl = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + '&by=name&o
 
 //axios.get(url, {mode: 'no-cors'})
 function getData(){
+document.getElementById('durl').innerHTML = durl;
 fetch(durl, {mode: 'no-cors'})
         .then(function (response) {
           document.getElementById('resultList').innerHTML = response.data;
