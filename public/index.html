@@ -38,7 +38,7 @@ const durl = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + '&by=name&o
 //axios.get(url, {mode: 'no-cors'})
 function getData(){
 document.getElementById('durl').innerHTML = durl;
-fetch(durl, {mode: 'no-cors'})
+fetch(durl)
         .then(function (response) {
           document.getElementById('resultList').innerHTML = response.text();
           console.log(response);
