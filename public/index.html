@@ -40,7 +40,7 @@ function getData(){
 document.getElementById('durl').innerHTML = durl;
 fetch(durl, {mode: 'no-cors'})
         .then(function (response) {
-          document.getElementById('resultList').innerHTML = response.json;
+          document.getElementById('resultList').innerHTML = response.text;
           console.log(response);
         })
         .catch(function (err) {
