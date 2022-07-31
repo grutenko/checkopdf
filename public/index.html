@@ -28,6 +28,7 @@
  // const APIKey = "sYoECmKTCXlTF19D";
    const APIKey = 'AiBEDldGmvLAzdp3';
 const APIRoot = "https://api.checko.ru/v2/search?key="+APIKey+"&"
+const url = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + 'by=name&obj=org&query=ростелеком')
 
   const headers = {
         'Content-Type': 'application/json'
@@ -35,7 +36,7 @@ const APIRoot = "https://api.checko.ru/v2/search?key="+APIKey+"&"
 
 
 function getData(){
-axios.get(APIRoot + 'by=name&obj=org&query=ростелеком', { crossdomain: true, mode: 'no-cors', headers: headers })
+axios.get(url)
         .then(function (response) {
           document.getElementById('resultList').innerHTML = response.data;
           console.log(response);
