@@ -35,7 +35,7 @@ const APIRoot = "https://api.checko.ru/v2/search?key="+APIKey+"&"
 
 
 function getData(){
-axios.get(APIRoot + 'by=name&obj=org&query=ростелеком', { crossdomain: true, headers: headers })
+axios.get(APIRoot + 'by=name&obj=org&query=ростелеком', { crossdomain: true, mode: 'no-cors', headers: headers })
         .then(function (response) {
           document.getElementById('resultList').innerHTML = response.data;
           console.log(response);
