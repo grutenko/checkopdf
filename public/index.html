@@ -47,7 +47,7 @@ fetch(durl)
   .then(function(result){
     console.log(result);
 
-          document.getElementById('resultList').innerHTML = result.data.Записи.map(function (org) {
+          resultList.innerHTML = result.data.Записи.map(function (org) {
             return (
               '<li class="row">' +
                   '<strong>' + org.ОГРН + '</strong>' +
