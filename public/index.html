@@ -25,15 +25,17 @@
 
 <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-  const APIKey = "sYoECmKTCXlTF19D";
-  // const APIKey = 'AiBEDldGmvLAzdp3';
+ // const APIKey = "sYoECmKTCXlTF19D";
+   const APIKey = 'AiBEDldGmvLAzdp3';
 const APIRoot = "https://api.checko.ru/v2/search?key="+APIKey+"&"
 
-
+  const headers = {
+        'Content-Type': 'application/json'
+    };
 
 
 function getData(){
-axios.get(APIRoot + 'by=name&obj=org&query=ростелеком', { crossdomain: true })
+axios.get(APIRoot + 'by=name&obj=org&query=ростелеком', { crossdomain: true, headers: headers })
         .then(function (response) {
           document.getElementById('resultList').innerHTML = response.data;
           console.log(response);
