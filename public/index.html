@@ -39,15 +39,18 @@ const durl = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + '&by=name&o
 function getData(){
 document.getElementById('durl').innerHTML = durl;
 fetch(durl)
-        .then(function (response) {
-          document.getElementById('resultList').innerHTML = response.json();
-          console.log(response);
-        })
-        .catch(function (err) {
-          document.getElementById('resultList').innerHTML = err.message;
+  .then(response => response.json())
+  .then(json => console.log(json))
+  .catch(function (err) {
+    document.getElementById('resultList').innerHTML = err.message;
         });
 
 }
+
+//        .then(function (response) {
+//          document.getElementById('resultList').innerHTML = response.json();
+//          console.log(response);
+//        })
 //async function fetchMoviesBadStatus() {
  
 //  const response = await fetch(APIRoot + 'by=name&obj=org&query=ростелеком', {
