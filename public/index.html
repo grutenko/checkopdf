@@ -40,10 +40,10 @@ function getData(){
 document.getElementById('durl').innerHTML = durl;
 fetch(durl)
  .then(function (response) {
-          document.getElementById('resultList').innerHTML = response.data.map(function (person) {
+          document.getElementById('resultList').innerHTML = response.data.Записи.map(function (org) {
             return (
               '<li class="row">' +
-                  '<strong>' + person.ОГРН + '</strong>' +
+                  '<strong>' + org.ОГРН + '</strong>' +
               '</li><br/>'
             );
           }).join('');
