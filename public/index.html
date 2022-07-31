@@ -39,16 +39,23 @@ const durl = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + '&by=name&o
 function getData(){
 document.getElementById('durl').innerHTML = durl;
 fetch(durl)
- .then(function (response) {
-          document.getElementById('resultList').innerHTML = response.data.Записи.map(function (org) {
+   .then((res)=>res.json())
+  .then(function(result){
+    console.log(result);
+
+          document.getElementById('resultList').innerHTML = result.data.Записи.map(function (org) {
             return (
               '<li class="row">' +
                   '<strong>' + org.ОГРН + '</strong>' +
               '</li><br/>'
             );
           }).join('');
-        })
-        .then(json => console.log(json))
+
+  }
+ 
+
+ 
+        
 
 
   .catch(function (err) {
