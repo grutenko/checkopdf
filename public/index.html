@@ -40,7 +40,7 @@ function getData(){
 document.getElementById('durl').innerHTML = durl;
 fetch(durl)
         .then(function (response) {
-          document.getElementById('resultList').innerHTML = response.text();
+          document.getElementById('resultList').innerHTML = response.json();
           console.log(response);
         })
         .catch(function (err) {
