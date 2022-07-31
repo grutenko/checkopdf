@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="generator" content="GitLab Pages">
-    <title>Plain HTML site using GitLab Pages</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="GitLab Pages">
+<title>Заполнялка PDF форм по данным из cheko</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
     <div class="navbar">
       <form onsubmit="getData">
         <label><input id="searchfield" type="text" />
@@ -24,7 +24,7 @@
 <!-- <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
 <script>
  // const APIKey = "sYoECmKTCXlTF19D";
-   const APIKey = 'AiBEDldGmvLAzdp3';
+const APIKey = 'AiBEDldGmvLAzdp3';
 const APIRoot = `https://api.checko.ru/v2/search?key=` + APIKey
 //const url = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + `by=name&obj=org&query=ростелеком`);
 const durl = 'https://corsproxy.io/?' + encodeURIComponent(APIRoot + '&by=name&obj=org&active=true&query=' + encodeURIComponent('ростелеком') );
@@ -96,4 +96,3 @@ fetch(durl)
 
 </body>
 </html>
-
