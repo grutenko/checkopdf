@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Заполнялка PDF форм по данным из cheko</title>
+  <meta name="description" content="Заполнялка PDF форм по данным из cheko">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/pdf-lib"></script>
+  <script src="https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.js"></script>
+  <script src="https://unpkg.com/downloadjs"></script>    
+  <link rel="stylesheet" href="/main.css">
+<body>
+<!-- Chekko API key sYoECmKTCXlTF19D
+https://checko.ru/user/account/api
+-->
+
+  <div class="container">
+    <form id="searchform" method="post">
+      <label for="ip" title="Искать по ИП?">ИП?</label>
+      <input id="ip" title="Искать по ИП?" type="checkbox">      
+      <input id="searchword" type="text">
+      <button type="submit">&nbsp;&#128269;&nbsp;</button>
+    </form>
+    <ul id="resultList">
+    </ul>
+  </div>
+<script>
+  fontkit.init;
+</script>
+
+<script module src="./main.js"></script>
+<script defer>
+function dosearch(e) {
+  e.preventDefault();
+  var searchword = document.getElementById('searchword').value;
+  searchCompanyOrPerson(searchword, 'resultList');
+}
+
+var form = document.getElementById('searchform');
+form.addEventListener('submit', dosearch);
+</script>
+</body>
+</html>
