@@ -22,7 +22,8 @@ const searchCompanyOrPerson = function (searchWord, containerId){
 
   //fetch('./dataorg.json')
   //fetch(CORSProxy + encodeURIComponent(APIRoot + '&by=name&obj=org&active=true&query=') + encodeURIComponent(searchWord), {mode: 'no-cors'} )
-  fetch(CORSProxy + encodeURIComponent(APIRoot + '&by=name&obj=org&active=true&query=') + encodeURIComponent(searchWord) )
+  //fetch(CORSProxy + encodeURIComponent(APIRoot + '&by=name&obj=org&active=true&query=') + encodeURIComponent(searchWord) )
+  fetch(CORSProxy + encodeURIComponent( APIRoot + '&by=name&obj=org&active=true&query=' + searchWord, {mode: 'no-cors'} ) )
     .then(response => response.json())
     .then(function (result) {
       orgDataset = [];    
