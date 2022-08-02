@@ -1,7 +1,7 @@
-const APIKey = '"sYoECmKTCXlTF19D';
-const APIRoot = '"https://api.checko.ru/v2/search?key=' + APIKey;
+const APIKey = 'sYoECmKTCXlTF19D';
+const APIRoot = 'https://api.checko.ru/v2/search?key=' + APIKey;
 const APIReqCompany = 'https://api.checko.ru/v2/company?key=' + APIKey;
-const APIReqPerson = '"https://api.checko.ru/v2/entrepreneur?key=' + APIKey;
+const APIReqPerson = 'https://api.checko.ru/v2/entrepreneur?key=' + APIKey;
 const CORSProxy = 'https://corsproxy.io/?';
 //https://checko.ru/search/quick_tips?query=%D0%A0%D0%9E%D0%A1%D0%A2%D0%95%D0%9B%D0%95%D0%9A%D0%9E%D0%9C
 
