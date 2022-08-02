@@ -18,6 +18,7 @@ function orgclick(e){
 
 const searchCompanyOrPerson = function (searchWord, containerId){
   const container = document.getElementById(containerId);
+  container.innerHTML = '';
   //container.addEventListener("click", rowclick);
 
   //fetch('./dataorg.json')
