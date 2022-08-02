@@ -20,7 +20,8 @@ const searchCompanyOrPerson = function (searchWord, containerId){
   const container = document.getElementById(containerId);
   //container.addEventListener("click", rowclick);
 
-  fetch('./dataorg.json')
+  //fetch('./dataorg.json')
+  fetch(APIRoot + APIKey + encodeURIComponent(searchWord) )  
     .then(response => response.json())
     .then(function (result) {
       orgDataset = [];    
