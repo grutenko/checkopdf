@@ -21,7 +21,8 @@ const searchCompanyOrPerson = function (searchWord, containerId){
   //container.addEventListener("click", rowclick);
 
   //fetch('./dataorg.json')
-  fetch(APIRoot + '&by=name&obj=org&active=true&query=' + encodeURIComponent(searchWord), {mode: 'no-cors'} )
+  //fetch(CORSProxy + encodeURIComponent(APIRoot + '&by=name&obj=org&active=true&query=') + encodeURIComponent(searchWord), {mode: 'no-cors'} )
+  fetch(CORSProxy + encodeURIComponent(APIRoot + '&by=name&obj=org&active=true&query=') + encodeURIComponent(searchWord) )
     .then(response => response.json())
     .then(function (result) {
       orgDataset = [];    
