@@ -272,6 +272,9 @@ async function fillPdfForm(orgIndex, formFile, isip){
     console.log('заполняем' + formFile);
     fillFormField(form,'Text10',orgDataset[orgIndex].НаимПолн, customFont);
     fillFormField(form,'Text21111',orgDataset[orgIndex].НаимПолн, customFont);
+
+    fillFormField(form,'Text21125',orgDataset[orgIndex].НаимПолн + ', ' + orgDataset[orgIndex].НаимСокр + ', ' + orgDataset[orgIndex].ОГРН, customFont);
+    fillFormField(form,'Text21126',orgDataset[orgIndex].ЮрАдрес, customFont);
     //fillFormField(form,'Text21139',orgDataset[orgIndex].НаимПолн, customFont);
 
     fillFormField(form,'Text11',orgDataset[orgIndex].ИНН, customFont);
