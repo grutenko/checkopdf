@@ -52,8 +52,6 @@ function getMoreInfo (id, inn, ogrn, isIp){
     }    
     selectedOrgExtData = result.data;
     return result;
-    //console.log(result.data);    
-    //console.log(selectedOrgExtData);
   }).catch(function (err){
     alert(err.message);
   });  
