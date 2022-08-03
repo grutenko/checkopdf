@@ -9,6 +9,15 @@ var orgDataset = []
 var selectedOrgData = []
 var selectedOrgExtData = []
 const container = document.getElementById('resultList');
+const searchform = document.getElementById('searchform');
+
+function dosearch(e) {
+  e.preventDefault();
+  var searchword = document.getElementById('searchword').value; 
+  searchCompanyOrPerson(searchword);
+}
+
+searchform.addEventListener('submit', dosearch);
 
 function orgclick(e){
   let el = e.target;
