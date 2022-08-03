@@ -8,7 +8,6 @@
   <script src="https://unpkg.com/pdf-lib"></script>
   <script src="https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.js"></script>
   <script src="https://unpkg.com/downloadjs"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
   <link rel="stylesheet" href="/main.css">
 <body>
 <!-- Chekko API key sYoECmKTCXlTF19D
@@ -25,21 +24,11 @@ https://checko.ru/user/account/api
     <ul id="resultList">
     </ul>
   </div>
+
 <script>
   fontkit.init;
 </script>
 
 <script module src="./main.js"></script>
-<script defer>
-function dosearch(e) {
-  e.preventDefault();
-  var searchword = document.getElementById('searchword').value;
-  
-  searchCompanyOrPerson(searchword);
-}
-
-const searchform = document.getElementById('searchform');
-searchform.addEventListener('submit', dosearch);
-</script>
 </body>
 </html>
