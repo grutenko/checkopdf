@@ -311,8 +311,12 @@ console.log(form.getFields());
     fillFormField(form,'Text3',orgDataset[orgIndex].ОГРН, customFont);
     fillFormField(form,'Text14',orgDataset[orgIndex].КПП, customFont);
     fillFormField(form,'Text1130',orgDataset[orgIndex].ИНН, customFont);    
+    fillFormField(form,'Text6',orgDataset[orgIndex].ИНН, customFont);
+    
+    fillFormField(form,'Text15',orgDataset[orgIndex].ЮрАдрес, customFont); 
+
     fillFormField(form,'Text115',orgDataset[orgIndex].ИНН, customFont);    
-    fillFormField(form,'Текст2070',orgDataset[orgIndex].ИНН, customFont);
+    fillFormField(form,'Text2070',orgDataset[orgIndex].ИНН, customFont);
     fillFormField(form,'Text21114',orgDataset[orgIndex].ОГРН, customFont);   
     fillFormField(form,'Text21115',orgDataset[orgIndex].ИНН, customFont);
     fillFormField(form,'Text21123',orgDataset[orgIndex].ИНН, customFont);
