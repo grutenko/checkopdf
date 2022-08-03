@@ -29,8 +29,6 @@ searchform.addEventListener('submit', dosearch);
 
 function orgclick(e){
   let el = e.target;
-  //alert(el.innerHTML);
-  //alert(orgDataset[el.dataset.index]);
   fillPdfForm(el.dataset.index, e.target.dataset.formfile, el.dataset.isip )
 }
 
@@ -45,8 +43,6 @@ function getMoreInfo (id, inn, ogrn, isIp){
   org = orgDataset[id];
   selectedOrgExtData = [];
   //return fetch(CORSProxy + encodeURIComponent(API + '&active=true&inn='+inn+'&ogrn='+ogrn))
-  console.log(isIp);
-  console.log(API);
   return fetch(CORSProxy + API + '&active=true&inn='+inn+'&ogrn='+ogrn)
   .then(response => response.json())
   .then(function(result){
@@ -78,31 +74,6 @@ function fetchQuery(query) {
       container.innerHTML = result.meta.message;
       return false;
     }
-    //console.log(result)
-    //pages = result.data.СтрВсего;
-    //page = result.data.СтрТекущ;
-    //orgDataset.push(result.data.Записи)
-   //orgDataset.push(result.data.Записи)
-     //console.log(result.data.Записи instanceof Array )
-
-   //  orgDataset = orgDataset.concat(...orgDataset, ...result.data.Записи)
-
-    // console.log(result.data.Записи instanceof Array)
-   //  console.log(result.data.Записи.length)               
-  // orgDataset = [orgDataset, result.data.Записи]
- // for (let i = 0; i < result.data.Записи.length; i++){
-
- //    result.data.Записи.map(function (org){
-//      orgDataset.push( org.ЮрАдрес )
-//    })
-//console.log(result.data.Записи instanceof Array)
-
-//console.log(result.data.Записи)
-
-    //for (let i = 0; i < result.data.Записи.length; i++){      orgDataset.push(result.data.Записи[i])    }    
-    //result.data.Записи[i]
-  pagecount = result.data.СтрВсего;
-  //console.log('Страниц: ' + pagecount);
 
   for(var i in result.data.Записи) {
 
@@ -133,18 +104,6 @@ function fetchQuery(query) {
     orgDataset.push(result.data.Записи[i]);
   }
   
-  //if (pagecount > 1) {
-  //  fetchQuery(query + encodeURIComponent('&page=2'));
-  //}
-    
-//  }  
-  
-//    orgDataset.push(result.data.Записи)
-//    orgDataset.push(result.data.Записи)
-//    orgDataset = orgDataset.flat(1)
-
-    //addData(result.data.Записи)
-    //addData(result.data.Записи)
   })
   .catch(function (err){
     container.innerHTML = err.message;
@@ -205,17 +164,12 @@ const searchCompanyOrPerson = function (searchWord, isip){
 function fillFormField(form, fieldName, fieldText, font){
   const {PDFDocument, PDFForm, StandardFonts, PDFFont, setFontAndSize} = PDFLib
   let field = form.getTextField(fieldName);
-  if (field != undefined) {
-     
+  if (field != undefined) {   
     
     console.log(fieldName + ' = ' + fieldText);
-//     const da = field.acroField.getDefaultAppearance() ?? '';
-//     const newDa = da + '\n' + setFontAndSize('HelveticaNeueCyr', 9).toString(); //setFontAndSize() method came to resuce     
-//     field.acroField.setDefaultAppearance(newDa);     
-    
-     field.setText(fieldText);
+    field.setText(fieldText);
 
-     field.updateAppearances(font);
+    field.updateAppearances(font);
   }
 }
 
@@ -224,32 +178,13 @@ async function fillPdfForm(orgIndex, formFile, isip){
   const formUrl = './' + formFile
   const formPdfBytes = await fetch(formUrl).then(res => res.arrayBuffer())
   const pdfDoc = await PDFDocument.load(formPdfBytes)  
-//  var fontkit = window.fontkit;
-  //var fontkit = fontkit;
-  //const {fontkit} = fontkit
   pdfDoc.registerFontkit(window.fontkit)
   const url = './HelveticaNeueCyr-Medium.ttf'
-  //const url = './Ubuntu-R.ttf'
-  //const url = './arial.ttf'
   const fontBytes = await fetch(url).then(res => res.arrayBuffer())
   const customFont = await pdfDoc.embedFont(fontBytes)
 
   const form = await pdfDoc.getForm()
-  //await form.embedDefaultFont(customFont);
-  //console.log(customFont);
-  
-
   const pages = await pdfDoc.getPages();
-  //const form = await pdfDoc.getForm()
-  
-//console.log(form)
-//console.log(form.getFields());
-
-
-  //const nameField = form.getTextField('Text10')
-//  if (nameField.isReadOnly()) console.log('Read only is enabled')
-//  if (nameField.needsAppearancesUpdate()) console.log('Needs update')
-  //const innField = form.getTextField('Text11')
   await getMoreInfo(orgIndex, orgDataset[orgIndex].ИНН, orgDataset[orgIndex].ОГРН, isip)
   .then(function(result){
   
@@ -352,17 +287,6 @@ async function fillPdfForm(orgIndex, formFile, isip){
 })
 
 const pdfBytes = await pdfDoc.save()
-
-
-// Trigger the browser to download the PDF document
 download(pdfBytes, formFile + "_filled.pdf", "application/pdf");
-
-  //nameField.updateAppearances(customFont)
-  //, (field, widge, font) => {      console.log(font.encoding)    })
-//  nameField.setText('xchfgh sfg ыпаывапывапвап')
-//  nameField.updateAppearances(customFont)
-  //nameField.setText('123456 абсre ')
-  // nameField2.setText('l;kjlkj;lk')
-
 
 }
