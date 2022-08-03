@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://unpkg.com/pdf-lib"></script>
   <script src="https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.js"></script>
-  <script src="https://unpkg.com/downloadjs"></script>    
-  <link rel="stylesheet" href="./main.css">
+  <script src="https://unpkg.com/downloadjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
+  <link rel="stylesheet" href="/main.css">
 <body>
 <!-- Chekko API key sYoECmKTCXlTF19D
 https://checko.ru/user/account/api
@@ -33,7 +34,8 @@ https://checko.ru/user/account/api
 function dosearch(e) {
   e.preventDefault();
   var searchword = document.getElementById('searchword').value;
-  searchCompanyOrPerson(searchword, 'resultList');
+  
+  searchCompanyOrPerson(searchword);
 }
 
 var form = document.getElementById('searchform');
