@@ -59,14 +59,18 @@ ul#resultList{
   list-style-position: inside;
   list-style: none;
   padding: 0px;
+  font-size: .9rem;
+  line-height: 1.4rem;
 }
 
 ul#resultList > li{
   display: flex;
   flex-direction: column;
   padding: 1em;
-  border-bottom: 1px dotted rgba(4,4,4,.3)
+  border-bottom: 1px dotted rgba(4,4,4,.3);
+  position: relative;  
 }
+
 ul#resultList > li:nth-child(even) {
   background: rgba(4,4,4,.03)
 }
@@ -75,8 +79,13 @@ ul#resultList > li > div{
   display: flex;
 }
 
+
+
 ul#resultList > li > div.buttons{
-  gap: 1rem;
+  gap: .7rem;  
+  position: absolute;
+  right: 1rem;
+  flex-direction: column;
 }
 
 ul#resultList > li > div button{
@@ -85,6 +94,7 @@ ul#resultList > li > div button{
   transition: 0.2s;
   will-change: opacity;
   cursor: pointer;
+  padding: .2rem .6rem;
 }
 
 ul#resultList > li:hover button{
