@@ -1,8 +1,11 @@
-const APIKey = 'sYoECmKTCXlTF19D';
+//const APIKey = 'sYoECmKTCXlTF19D';
+const APIKey = 'AiBEDldGmvLAzdp3';
 const APIRoot = 'https://api.checko.ru/v2/search?key=' + APIKey;
 const APIReqCompany = 'https://api.checko.ru/v2/company?key=' + APIKey;
 const APIReqPerson = 'https://api.checko.ru/v2/entrepreneur?key=' + APIKey;
-const CORSProxy = 'https://corsproxy.io/?';
+//const CORSProxy = 'https://corsproxy.io/?';
+//const CORSProxy = 'https://thingproxy.freeboard.io/fetch/';
+const CORSProxy = 'https://api.codetabs.com/v1/proxy/?quest=';
 //https://checko.ru/search/quick_tips?query=%D0%A0%D0%9E%D0%A1%D0%A2%D0%95%D0%9B%D0%95%D0%9A%D0%9E%D0%9C
 fontkit.init;
 
@@ -32,18 +35,28 @@ function orgclick(e){
 }
 
 function getMoreInfo (id, inn, ogrn, isIp){
-  var API = isIp ? APIReqPerson : APIReqCompany;
+  var API = '';
+  if (isIp != true) {
+     API = APIReqCompany;
+  }else{
+      API = APIReqPerson;
+  }
+
   org = orgDataset[id];
   selectedOrgExtData = [];
-  return fetch(CORSProxy + encodeURIComponent(API + '&active=true&inn='+inn+'&ogrn='+ogrn))
+  //return fetch(CORSProxy + encodeURIComponent(API + '&active=true&inn='+inn+'&ogrn='+ogrn))
+  console.log(isIp);
+  console.log(API);
+  return fetch(CORSProxy + API + '&active=true&inn='+inn+'&ogrn='+ogrn)
   .then(response => response.json())
   .then(function(result){
     if (result.meta.status != 'ok') {
       alert(result.meta.message);
       return false;
     }    
-    console.log(result.data);
-    //selectedOrgExtData = result.data;
+    selectedOrgExtData = result.data;
+    return result;
+    //console.log(result.data);    
     //console.log(selectedOrgExtData);
   }).catch(function (err){
     alert(err.message);
@@ -92,6 +105,7 @@ function fetchQuery(query) {
   //console.log('Страниц: ' + pagecount);
 
   for(var i in result.data.Записи) {
+
     if (result.data.Записи[i].ЮрАдрес != undefined){
       var addr = result.data.Записи[i].ЮрАдрес.split(',', 2);
       result.data.Записи[i].Индекс = addr[0].trim();
@@ -114,12 +128,14 @@ function fetchQuery(query) {
     if (result.data.Записи[i].КПП == undefined) {
       result.data.Записи[i].КПП = '';
     }    
+
+  
     orgDataset.push(result.data.Записи[i]);
   }
   
-  if (pagecount > 1) {
-    fetchQuery(query + encodeURIComponent('&page=2'));
-  }
+  //if (pagecount > 1) {
+  //  fetchQuery(query + encodeURIComponent('&page=2'));
+  //}
     
 //  }  
   
@@ -141,7 +157,8 @@ const searchCompanyOrPerson = function (searchWord, isip){
   console.log(isip);
   var searchbase = isip ? "obj=ent" : "obj=org";
   
-  fetchQuery(CORSProxy + encodeURIComponent(APIRoot + '&by=name&'+searchbase+'&active=true&source=true&query=' + encodeURIComponent(searchWord)))
+  //fetchQuery(CORSProxy + encodeURIComponent(APIRoot + '&by=name&'+searchbase+'&active=true&source=true&query=' + encodeURIComponent(searchWord)))
+  fetchQuery(CORSProxy + APIRoot + '&by=name&'+searchbase+'&active=true&source=true&query=' + encodeURIComponent(searchWord))
   .then( function(res){
     console.log(orgDataset)
     console.log(orgDataset.length)  
@@ -169,7 +186,7 @@ const searchCompanyOrPerson = function (searchWord, isip){
       
       let btnF22 = document.createElement('button');
       btnF22.dataset.index = i;
-      btnC22.dataset.isip = isip;
+      btnF22.dataset.isip = isip;
       btnF22.innerHTML = 'Ф22';
       btnF22.dataset.formfile = 'form_F_22_10e.pdf';
       btnF22.addEventListener('click', orgclick);
@@ -188,8 +205,16 @@ const searchCompanyOrPerson = function (searchWord, isip){
 function fillFormField(form, fieldName, fieldText, font){
   const {PDFDocument, PDFForm, StandardFonts, PDFFont, setFontAndSize} = PDFLib
   let field = form.getTextField(fieldName);
-  if (field != 'undefined') {
+  if (field != undefined) {
+     
+    
+    console.log(fieldName + ' = ' + fieldText);
+//     const da = field.acroField.getDefaultAppearance() ?? '';
+//     const newDa = da + '\n' + setFontAndSize('HelveticaNeueCyr', 9).toString(); //setFontAndSize() method came to resuce     
+//     field.acroField.setDefaultAppearance(newDa);     
+    
      field.setText(fieldText);
+
      field.updateAppearances(font);
   }
 }
@@ -203,9 +228,9 @@ async function fillPdfForm(orgIndex, formFile, isip){
   //var fontkit = fontkit;
   //const {fontkit} = fontkit
   pdfDoc.registerFontkit(window.fontkit)
-  //const url = './HelveticaNeueCyr-Medium.ttf'
+  const url = './HelveticaNeueCyr-Medium.ttf'
   //const url = './Ubuntu-R.ttf'
-  const url = './arial.ttf'
+  //const url = './arial.ttf'
   const fontBytes = await fetch(url).then(res => res.arrayBuffer())
   const customFont = await pdfDoc.embedFont(fontBytes)
 
@@ -225,11 +250,12 @@ async function fillPdfForm(orgIndex, formFile, isip){
 //  if (nameField.isReadOnly()) console.log('Read only is enabled')
 //  if (nameField.needsAppearancesUpdate()) console.log('Needs update')
   //const innField = form.getTextField('Text11')
-  getMoreInfo(orgIndex, orgDataset[orgIndex].ИНН, orgDataset[orgIndex].ОГРН, isip)
+  await getMoreInfo(orgIndex, orgDataset[orgIndex].ИНН, orgDataset[orgIndex].ОГРН, isip)
   .then(function(result){
-  console.log(selectedOrgExtData );
   
-  if (orgDataset[orgIndex].ИНН == '') {selectedOrgExtData.ИНН;}
+    console.log(selectedOrgExtData );
+  
+  if (orgDataset[orgIndex].ИНН == '') {orgDataset[orgIndex].ИНН = selectedOrgExtData.ИНН;}
   if (orgDataset[orgIndex].НаимСокр == '') {orgDataset[orgIndex].НаимСокр = selectedOrgExtData.ТипСокр + ' ' + selectedOrgExtData.ФИО;}
   if (orgDataset[orgIndex].НаимПолн == '') {orgDataset[orgIndex].НаимПолн = selectedOrgExtData.ТипСокр + ' ' + selectedOrgExtData.ФИО;}
   if (orgDataset[orgIndex].ЮрАдрес == '') {
@@ -243,10 +269,10 @@ async function fillPdfForm(orgIndex, formFile, isip){
 
   
   if (formFile == 'form_C_22_10e.pdf'){    
-    
+    console.log('заполняем' + formFile);
     fillFormField(form,'Text10',orgDataset[orgIndex].НаимПолн, customFont);
     fillFormField(form,'Text21111',orgDataset[orgIndex].НаимПолн, customFont);
-    fillFormField(form,'Text21139',orgDataset[orgIndex].НаимПолн, customFont);
+    //fillFormField(form,'Text21139',orgDataset[orgIndex].НаимПолн, customFont);
 
     fillFormField(form,'Text11',orgDataset[orgIndex].ИНН, customFont);
     fillFormField(form,'Text21115',orgDataset[orgIndex].ИНН, customFont);
@@ -260,18 +286,29 @@ async function fillPdfForm(orgIndex, formFile, isip){
     fillFormField(form,'Text21114',orgDataset[orgIndex].ОГРН, customFont);
     fillFormField(form,'Text21128',orgDataset[orgIndex].ОГРН, customFont);
 
-    fillFormField(form,'Text21139',orgDataset[orgIndex].ОГРНИП, customFont);
+    fillFormField(form,'Text21139',orgDataset[orgIndex].ОГРН, customFont);
 
     fillFormField(form,'Text21112',orgDataset[orgIndex].ЮрАдрес, customFont);
 
     fillFormField(form,'Text211',orgDataset[orgIndex].АдресБезИндекса, customFont);
-    fillFormField(form,'Text222',orgDataset[orgIndex].Индекс, customFont);    
+    fillFormField(form,'Text222',orgDataset[orgIndex].Индекс, customFont);        
+    fillFormField(form,'Text1001',orgDataset[orgIndex].ОКВЭД, customFont);
+
+    if (isip == true) {
+      fillFormField(form,'Text21138',orgDataset[orgIndex].ФИО, customFont);
+      fillFormField(form,'Text21140',orgDataset[orgIndex].ФИО, customFont);
+    }
+
   }
   
   if (formFile == 'form_F_22_10e.pdf'){
+    console.log('заполняем' + formFile);
     fillFormField(form,'Text1',orgDataset[orgIndex].НаимПолн, customFont);
     fillFormField(form,'Text2',orgDataset[orgIndex].НаимСокр, customFont);
     fillFormField(form,'Text3',orgDataset[orgIndex].ОГРН, customFont);
+    
+    fillFormField(form,'Text4',orgDataset[orgIndex].ДатаРег, customFont);
+
     fillFormField(form,'Text14',orgDataset[orgIndex].КПП, customFont);
     fillFormField(form,'Text1130',orgDataset[orgIndex].ИНН, customFont);    
     fillFormField(form,'Text6',orgDataset[orgIndex].ИНН, customFont);
@@ -296,21 +333,33 @@ async function fillPdfForm(orgIndex, formFile, isip){
     fillFormField(form,'Text21129',orgDataset[orgIndex].ИНН, customFont);    
     fillFormField(form,'Text21135',orgDataset[orgIndex].ИНН, customFont);
   
-    fillFormField(form,'Text21139',orgDataset[orgIndex].ОГРНИП, customFont);
+    fillFormField(form,'Text21139',orgDataset[orgIndex].ОГРН, customFont);
     fillFormField(form,'Text21144',orgDataset[orgIndex].ИНН, customFont);
+    fillFormField(form,'Text1001',orgDataset[orgIndex].ОКВЭД, customFont);
+    fillFormField(form,'Text101',orgDataset[orgIndex].ОКВЭД, customFont);  
+    
+    if (isip == true) {
+      fillFormField(form,'Text109',orgDataset[orgIndex].ФИО, customFont);      
+    }
+
+    
   }
+
+
 })
-  
+
+const pdfBytes = await pdfDoc.save()
+
+
+// Trigger the browser to download the PDF document
+download(pdfBytes, formFile + "_filled.pdf", "application/pdf");
+
   //nameField.updateAppearances(customFont)
   //, (field, widge, font) => {      console.log(font.encoding)    })
 //  nameField.setText('xchfgh sfg ыпаывапывапвап')
 //  nameField.updateAppearances(customFont)
   //nameField.setText('123456 абсre ')
   // nameField2.setText('l;kjlkj;lk')
-  const pdfBytes = await pdfDoc.save()
 
-
-  // Trigger the browser to download the PDF document
-  download(pdfBytes, formFile + "_filled.pdf", "application/pdf");
 
 }
