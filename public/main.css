@@ -77,6 +77,7 @@ ul#resultList > li:nth-child(even) {
 
 ul#resultList > li > div{
   display: flex;
+  gap: 1rem;
 }
 
 
