@@ -10,25 +10,16 @@
   <script src="https://unpkg.com/downloadjs"></script>
   <link rel="stylesheet" href="./main.css">
 <body>
-<!-- Chekko API key sYoECmKTCXlTF19D
-https://checko.ru/user/account/api
--->
-
   <div class="container">
     <form id="searchform" method="post">
-      <label for="ip" title="Искать по ИП?">ИП?</label>
-      <input id="ip" title="Искать по ИП?" type="checkbox">      
-      <input id="searchword" type="text">
+      <label for="isip" title="Искать по ИП?">ИП?</label>
+      <input id="isip" title="Искать по ИП?" type="checkbox">      
+      <input id="searchword" type="text" placeholder="Наименование организации или ИП">
       <button type="submit">&nbsp;&#128269;&nbsp;</button>
     </form>
     <ul id="resultList">
     </ul>
   </div>
-
-<script>
-  fontkit.init;
-</script>
-
-<script module src="./main.js"></script>
+<script defer src="./main.js"></script>
 </body>
 </html>
