@@ -49,17 +49,19 @@ async function searchByInn( inn: string, entrepreneur: boolean ): Promise<ApiDat
 }
 
 function showDataSet( data: [ApiData] ) {
+    console.log(data);
+
     let container = document.getElementById("resultList") as HTMLUListElement;
     container.innerHTML = '';
 
     for( let org of data ) {
         let li = document.createElement('LI') as HTMLLIElement;
         li.innerHTML = `<span>${org.НаимСокр || org.ФИО}</span>
-            <span class="org-addr"><strong>Юр. Адрес: </strong>${org.ЮрАдрес.АдресРФ}</span>
+            <span class="org-addr"><strong>Юр. Адрес: </strong>${org.ЮрАдрес?.АдресРФ || org.СвязРуковод[0]?.ЮрАдрес || "не указан"}</span>
             <div>
             <span class="org-inn"><strong>ИНН: </strong>${org.ИНН}</span>
-            <span class="org-kpp"><strong>КПП: </strong>${org.КПП}</span>
-            <span class="org-ogrn"><strong>ОГРН: </strong>${org.ОГРН}</span>
+            <span class="org-kpp"><strong>КПП: </strong>${org.КПП || "не указан"}</span>
+            <span class="org-ogrn"><strong>ОГРН: </strong>${org?.ОГРН || org.ОГРНИП}</span>
             </div>
             <div class="buttons">
             </div>`;
@@ -98,14 +100,16 @@ function showError( message: string ) {
 function prepareFields( data: {[ key: string ]: any} ): { [key: string]: string } {
     const source = data.source;
 
+    const address = source.ЮрАдрес?.АдресРФ || source.СвязРуковод[0]?.ЮрАдрес;
+
     let fields = {};
 
     if( data.type === 'c22' ) {
         fields = {
-            Text10: source.НаимПолн,
-            Text21111: source.НаимПолн,
-            Text21125: `${source.НаимПолн}, ${source.НаимСокр}, ${source.ОГРН}`,
-            Text21126: source.ЮрАдрес.АдресРФ,
+            Text10: source.НаимПолн || source.ФИО,
+            Text21111: source.НаимПолн || source.ФИО,
+            Text21125: !source.is_ip ? `${source.НаимПолн}, ${source.НаимСокр}, ${source.ОГРН}` : "",
+            Text21126: address,
             Text11: source.ИНН,
             Text21115: source.ИНН,
             Text21123: source.ИНН,
@@ -116,13 +120,13 @@ function prepareFields( data: {[ key: string ]: any} ): { [key: string]: string 
             Text21114: source.ОГРН || source.ОГРНИП,
             Text21128: source.ОГРН || source.ОГРНИП,
             Text21139: source.ОГРН || source.ОГРНИП,
-            Text21112: source.ЮрАдрес,
-            Text211: source.ЮрАдрес.АдресРФ.split(/,\s*/, 2)[1],
-            Text222: source.ЮрАдрес.АдресРФ.split(/,\s*/, 2)[0],
-            Text1001: source.ОКВЭД,
+            Text21112: address,
+            Text211: address.split(/,\s*/, 2)[1],
+            Text222: address.split(/,\s*/, 2)[0],
+            Text1001: source.ОКВЭД.Наим,
         };
 
-        if( data.is_ip ) {
+        if( source.is_ip ) {
             fields = Object.assign(fields, {
                 Text21138: source.ФИО,
                 Text21140: source.ФИО
@@ -130,35 +134,35 @@ function prepareFields( data: {[ key: string ]: any} ): { [key: string]: string 
         }
     } else {
         fields = {
-            Text1: source.НаимПолн,
-            Text2: source.НаимСокр || source.НаимПолн,
+            Text1: source.НаимПолн || source.ФИО,
+            Text2: !source.is_ip ? source.НаимСокр || source.НаимПолн : source.ФИО,
             Text3: source.ОГРН || source.ОГРНИП,
             Text4: source.ДатаРег,
             Text14: source.КПП,
             Text1130: source.ИНН,
             Text6: source.ИНН,
-            Text15: source.ЮрАдрес.АдресРФ,
-            Text16: source.ЮрАдрес.АдресРФ.split(/,\s*/, 2)[0],
-            Text222: source.ЮрАдрес.АдресРФ.split(/,\s*/, 2)[0],
+            Text15: address,
+            Text16: address.split(/,\s*/, 2)[0],
+            Text222: address.split(/,\s*/, 2)[0],
             Text115: source.ИНН,
             Text2070: source.ИНН,
             Text21114: source.ОГРН || source.ОГРНИП,
             Text21115: source.ИНН,
             Text21123: source.ИНН,
             Text21111: source.НаимПолн,
-            Text21112: source.ЮрАдрес.АдресРФ,
+            Text21112: address,
             Text21125: source.НаимПолн,
-            Text21126: source.ЮрАдрес.АдресРФ,
+            Text21126: address,
             Text21128: source.ОГРН || source.ОГРНИП,
             Text21129: source.ИНН,
             Text21135: source.ИНН,
             Text21139: source.ОГРН || source.ОГРНИП,
             Text21144: source.ИНН,
-            Text1001: source.ОКВЭД,
-            Text101: source.ОКВЭД
+            Text1001: source.ОКВЭД.Наим,
+            Text101: source.ОКВЭД.Наим
         };
 
-        if( data.is_ip ) {
+        if( source.is_ip ) {
             fields = Object.assign(fields, {
                 Text109: source.ФИО
             })
@@ -177,6 +181,8 @@ function onCreatePDF(e: Event) {
 }
 
 async function fillForm( filename: string, fields: { [key: string]: string }): Promise<PDFDocument> {
+     console.log(fields);
+
     let pdf = await PDFDocument.load(
         await fetch(`./${filename}`).then(response => response.arrayBuffer())
     );
@@ -194,7 +200,7 @@ async function fillForm( filename: string, fields: { [key: string]: string }): P
             field.setText( value );
             field.updateAppearances(font);
         } catch( e ) {
-            console.warn( `Поле ${key} не найдено в документе  ${filename}.` );
+            console.warn( `Ошибка добавления поля: ${key} в документе  ${filename}: ${e.message}` );
         }
     }
 
