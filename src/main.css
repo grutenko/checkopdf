@@ -1,0 +1,168 @@
+body {
+    font-family: sans-serif;
+    margin: auto;
+    max-width: 1280px;
+  }
+  
+  .navbar {
+    background-color: #313236;
+    border-radius: 2px;
+    max-width: 800px;
+  }
+  
+  .navbar a {
+    color: #aaa;
+    display: inline-block;
+    font-size: 15px;
+    padding: 10px;
+    text-decoration: none;
+  }
+  
+  .navbar a:hover {
+    color: #ffffff;
+  }
+  
+  
+
+html {
+    color: #222;
+    font-size: .9rem;
+    line-height: 1.4;
+    font-family: Helvetica, sans-serif;
+  }
+  
+  *{
+    box-sizing: border-box;
+  }
+  
+  .container{
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  #searchform{
+    background-color: #5fac62;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: .4rem 2rem;
+    box-shadow: 0px 2px 4px 0px rgb(0 0 0 / 20%);
+    border-radius: 2px;
+    position: relative;
+  }
+  
+  #searchform input, #searchform button{
+    padding: 1.2rem;
+    margin: 0px;
+    border: 0px;
+  }
+  
+  #searchform button{
+    right: 2rem;
+    font-size: 1.9rem;
+    padding: .4rem;
+  }
+  
+  #searchform label{
+    white-space: nowrap;
+    font-weight: 600;
+    padding: .5rem;
+    user-select: none;
+    color: white;
+  }
+  
+  #searchform input[type="checkbox"]{
+    height: 2rem;
+    width: 2rem;
+  }
+  
+  #searchform #searchword{
+    width: 100%;
+    margin-left: 1.2rem;
+  }
+  
+  ul#resultList{
+    list-style-position: inside;
+    list-style: none;
+    padding: 0px;
+    font-size: .9rem;
+    line-height: 1.4rem;
+  }
+  
+  ul#resultList > li{
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    border-bottom: 1px dotted rgba(4,4,4,.3);
+    position: relative;  
+  }
+  
+  ul#resultList > li:nth-child(even) {
+    background: rgba(4,4,4,.03)
+  }
+  
+  ul#resultList > li > div{
+    display: flex;
+    gap: 1rem;
+  }
+  
+  
+  
+  ul#resultList > li > div.buttons{
+    gap: .7rem;  
+    position: absolute;
+    right: 1rem;
+    flex-direction: column;
+  }
+  
+  ul#resultList > li > div button{
+    opacity: 0;
+    animation: ease-in-out;
+    transition: 0.2s;
+    will-change: opacity;
+    cursor: pointer;
+    padding: .2rem .6rem;
+  }
+  
+  ul#resultList > li:hover button{
+    opacity: 1;
+  }
+  
+  
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+  }
+  
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .hidden, [hidden] {
+    display: none !important;
+  }
+  
+  .invisible {
+    visibility: hidden;
+  }
+  
+  .clearfix::before,
+  .clearfix::after {
+    content: " ";
+    display: table;
+  }
+  
+  .clearfix::after {
+    clear: both;
+  }
+  
