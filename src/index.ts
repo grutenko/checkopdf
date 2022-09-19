@@ -3,7 +3,7 @@ import { PDFDocument } from 'pdf-lib'
 const fontkit = require("@pdf-lib/fontkit");
 
 import './main.css';
-import * as download from 'downloadjs';
+import download from 'downloadjs';
 
 interface QueryParams {
     [name: string]: string;
@@ -219,5 +219,6 @@ document.getElementById("doSearch").addEventListener("click", function(e) {
     })
     .catch(err => {
         if( err instanceof ApiError ) showError( err.message );
+        else throw err;
     })
 })
