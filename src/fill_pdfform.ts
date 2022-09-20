@@ -52,6 +52,7 @@ export function prepare( data: Data ): Fields {
         fields = fillKpp_f22(fields, data);
         fields = fillTax_f22( fields, data);
         fields = fillOkopf_f22( fields, data);
+        fields = fillOkved_f22( fields, data);
 
         fields = Object.assign(fields, {
             Text1: source.НаимПолн || source.ФИО,
@@ -81,6 +82,13 @@ export function prepare( data: Data ): Fields {
         }
     }
 
+    return fields;
+}
+
+function fillOkved_f22( fields: Fields, data: Data): Fields {
+    if( data.source?.ОКВЭД?.Код) {
+        fields.Text8 = data.source.ОКВЭД.Код
+    }
     return fields;
 }
 
