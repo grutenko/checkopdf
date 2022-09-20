@@ -13,9 +13,19 @@ describe("test-prepare-pdf-fields", () => {
     test.each(datasets)("Test data prepare %s", (data) => {
         const fields = prepare(data);
         for( let [key, value] of Object.entries(fields) ) {
-            expect( typeof value, `For "${key}" field` ).toBe('string');
-            expect( value.length, `For "${key}" field` ).toBeGreaterThan(0);
-            expect( value, `For "${key}" field value: ${value}`).not.toMatch(/(undefined|null|NaN)/);
+            expect( typeof value === 'string' || typeof value === 'object', `For "${key}" field` ).toBeTruthy();
+
+            if( typeof value === 'string' ) {
+                expect( value.length, `For "${key}" field` ).toBeGreaterThan(0);
+            }
+            if( typeof value === 'object' ) {
+                expect( value.type, `For "${key}" field`).toMatch(/^(checkbox|radiobutton)$/);
+                expect( typeof value.value, `For "${key}" field`).toMatch(/^(string|boolean)$/);
+                if( typeof value.value === 'string' ) {
+                    expect( value.value.length, `For "${key}" field` ).toBeGreaterThan(0);
+                    expect( value.value, `For "${key}" field value: ${value}`).not.toMatch(/(undefined|null|NaN)/);
+                }
+            }
         }
     });
 });
