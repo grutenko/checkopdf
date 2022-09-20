@@ -51,6 +51,7 @@ export function prepare( data: Data ): Fields {
         fields = fillAddress_f22(fields, data);
         fields = fillKpp_f22(fields, data);
         fields = fillTax_f22( fields, data);
+        fields = fillOkopf_f22( fields, data);
 
         fields = Object.assign(fields, {
             Text1: source.НаимПолн || source.ФИО,
@@ -78,6 +79,27 @@ export function prepare( data: Data ): Fields {
         if( source.is_ip ) {
             fields = fillFio_f22(fields, data);
         }
+    }
+
+    return fields;
+}
+
+function fillOkopf_f22( fields: Fields, data: Data ): Fields {
+    const okopf = data.source.ОКОПФ;
+
+    if( typeof okopf === 'object' && typeof okopf.Наим === 'string' ) {
+        switch( okopf.Наим ) {
+            case 'Общества с ограниченной ответственностью': fields.Group34 = { type: "radiobutton", value: '0'}; break;
+            case 'Непубличные акционерные общества': fields.Group34 = { type: "radiobutton", value: '4'}; break;
+            case 'Публичные акционерные общества': fields.Group34 = { type: "radiobutton", value: '5'}; break;
+            case 'Открытые акционерные общества': fields.Group34 = { type: "radiobutton", value: '1'}; break;
+            case 'Закрытые акционерные общества': fields.Group34 = { type: "radiobutton", value: '2'}; break;
+            case 'Индивидуальные предприниматели': fields.Group34 = { type: "radiobutton", value: '3'}; break;
+        }
+    }
+
+    if( data.is_ip ) {
+        fields.Group34 = { type: "radiobutton", value: '3'};
     }
 
     return fields;
@@ -209,6 +231,11 @@ export async function fillFormFromBytes(
                 }
             } else if( type === 'radiobutton' ) {
                 const field = form.getRadioGroup( key );
+                const decodedValues = field.acroField.getOnValues().map(onValue => onValue.decodeText());
+                if( decodedValues.indexOf( v as string ) === -1) {
+                    throw new Error(`В этой группе нет кнопки с кодом: ${v}. ${decodedValues.join(', ')}`)
+                }
+
                 for( let value of field.acroField.getOnValues() ) {
                     if( value.decodeText() === v ) {
                         field.acroField.setValue( value )
