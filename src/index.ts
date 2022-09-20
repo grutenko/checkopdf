@@ -3,6 +3,7 @@ import { PDFDocument } from 'pdf-lib'
 const fontkit = require("@pdf-lib/fontkit");
 
 import './main.css';
+import { fillForm, prepare } from './fill_pdfform';
 import download from 'downloadjs';
 
 interface QueryParams {
@@ -97,114 +98,12 @@ function showError( message: string ) {
     container.innerHTML = message;
 }
 
-function prepareFields( data: {[ key: string ]: any} ): { [key: string]: string } {
-    const source = data.source;
-
-    const address = source.ЮрАдрес?.АдресРФ || source.СвязРуковод[0]?.ЮрАдрес;
-
-    let fields = {};
-
-    if( data.type === 'c22' ) {
-        fields = {
-            Text10: source.НаимПолн || source.ФИО,
-            Text21111: source.НаимПолн || source.ФИО,
-            Text21125: !source.is_ip ? `${source.НаимПолн}, ${source.НаимСокр}, ${source.ОГРН}` : "",
-            Text21126: address,
-            Text11: source.ИНН,
-            Text21115: source.ИНН,
-            Text21123: source.ИНН,
-            Text21129: source.ИНН,
-            Text21135: source.ИНН,
-            Text21144: source.ИНН,
-            Text12: source.КПП,
-            Text21114: source.ОГРН || source.ОГРНИП,
-            Text21128: source.ОГРН || source.ОГРНИП,
-            Text21139: source.ОГРН || source.ОГРНИП,
-            Text21112: address,
-            Text211: address.split(/,\s*/, 2)[1],
-            Text222: address.split(/,\s*/, 2)[0],
-            Text1001: source.ОКВЭД.Наим,
-        };
-
-        if( source.is_ip ) {
-            fields = Object.assign(fields, {
-                Text21138: source.ФИО,
-                Text21140: source.ФИО
-            });
-        }
-    } else {
-        fields = {
-            Text1: source.НаимПолн || source.ФИО,
-            Text2: !source.is_ip ? source.НаимСокр || source.НаимПолн : source.ФИО,
-            Text3: source.ОГРН || source.ОГРНИП,
-            Text4: source.ДатаРег,
-            Text14: source.КПП,
-            Text1130: source.ИНН,
-            Text6: source.ИНН,
-            Text15: address,
-            Text16: address.split(/,\s*/, 2)[0],
-            Text222: address.split(/,\s*/, 2)[0],
-            Text115: source.ИНН,
-            Text2070: source.ИНН,
-            Text21114: source.ОГРН || source.ОГРНИП,
-            Text21115: source.ИНН,
-            Text21123: source.ИНН,
-            Text21111: source.НаимПолн,
-            Text21112: address,
-            Text21125: source.НаимПолн,
-            Text21126: address,
-            Text21128: source.ОГРН || source.ОГРНИП,
-            Text21129: source.ИНН,
-            Text21135: source.ИНН,
-            Text21139: source.ОГРН || source.ОГРНИП,
-            Text21144: source.ИНН,
-            Text1001: source.ОКВЭД.Наим,
-            Text101: source.ОКВЭД.Наим
-        };
-
-        if( source.is_ip ) {
-            fields = Object.assign(fields, {
-                Text109: source.ФИО
-            })
-        }
-    }
-
-    return fields;
-}
-
 function onCreatePDF(e: Event) {
     const data = JSON.parse( (e.target as HTMLButtonElement).getAttribute("data") );
 
-    fillForm(data.formfile, prepareFields( data ))
+    fillForm(data.formfile, prepare( data ))
     .then( pdf => pdf.save() )
     .then( bytes => download(bytes, data.formfile + "_filled.pdf", "application/pdf"))
-}
-
-async function fillForm( filename: string, fields: { [key: string]: string }): Promise<PDFDocument> {
-     console.log(fields);
-
-    let pdf = await PDFDocument.load(
-        await fetch(`./${filename}`).then(response => response.arrayBuffer())
-    );
-
-    pdf.registerFontkit(fontkit.default);
-    const font = await pdf.embedFont(
-        await fetch('./HelveticaNeueCyr-Medium.ttf').then(res => res.arrayBuffer())
-    );
-
-    const form = pdf.getForm();
-
-    for( let [ key, value ] of Object.entries(fields) ) {
-        try {
-            const field = form.getTextField( key );
-            field.setText( value );
-            field.updateAppearances(font);
-        } catch( e ) {
-            console.warn( `Ошибка добавления поля: ${key} в документе  ${filename}: ${e.message}` );
-        }
-    }
-
-    return pdf;
 }
 
 document.getElementById("doSearch").addEventListener("click", function(e) {
