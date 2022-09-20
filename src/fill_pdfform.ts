@@ -29,6 +29,9 @@ export function prepare( data: Data ): Fields {
             fields = fillFullCompanyName_c22(fields, data);
         }
 
+        fields = fillOkved_с22( fields, data );
+        fields = fillPhone_c22( fields, data );
+
         fields = Object.assign(fields, {
             Text10: source.НаимПолн || source.ФИО,
             Text21111: source.НаимПолн || source.ФИО,
@@ -53,6 +56,7 @@ export function prepare( data: Data ): Fields {
         fields = fillTax_f22( fields, data);
         fields = fillOkopf_f22( fields, data);
         fields = fillOkved_f22( fields, data);
+        fields = fillFns_f22( fields, data );
 
         fields = Object.assign(fields, {
             Text1: source.НаимПолн || source.ФИО,
@@ -85,9 +89,30 @@ export function prepare( data: Data ): Fields {
     return fields;
 }
 
+function fillPhone_c22( fields: Fields, data: Data ): Fields {
+    if( data.source?.Контакты?.Тел && Array.isArray(data.source.Контакты.Тел) && data.source.Контакты.Тел.length > 0) {
+        fields.Text13 = data.source.Контакты.Тел[0]
+    }
+    return fields;
+}
+
 function fillOkved_f22( fields: Fields, data: Data): Fields {
     if( data.source?.ОКВЭД?.Код) {
         fields.Text8 = data.source.ОКВЭД.Код
+    }
+    return fields;
+}
+
+function fillOkved_с22( fields: Fields, data: Data): Fields {
+    if( data.source?.ОКВЭД?.Код) {
+        fields.Text110 = data.source.ОКВЭД.Код
+    }
+    return fields;
+}
+
+function fillFns_f22( fields: Fields, data: Data): Fields {
+    if( data.source?.РегФНС?.НаимОрг ) {
+        fields.Text5 = data.source?.РегФНС?.НаимОрг;
     }
     return fields;
 }
@@ -161,8 +186,8 @@ function fillAddress_c22( fields: Fields, data: Data ): Fields {
         fields = Object.assign(fields, {
             Text21126: address,
             Text21112: address,
-            Text211: address.split(/,\s*/, 2)[1],
-            Text222: address.split(/,\s*/, 2)[0],
+            //Text211: address.split(/,\s*/, 2)[1],
+            //Text222: address.split(/,\s*/, 2)[0],
         })
     }
 
@@ -176,7 +201,6 @@ function fillAddress_f22( fields: Fields, data: Data ): Fields {
     if( address ) {
         fields = Object.assign(fields, {
             Text15: address,
-            Text16: address.split(/,\s*/, 2)[0],
             Text222: address.split(/,\s*/, 2)[0],
             Text21112: address,
             Text21126: address,
