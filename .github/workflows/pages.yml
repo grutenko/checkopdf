@@ -11,3 +11,7 @@ jobs:
           node-version: 14.15.0
       - run: yarn install
       - run: APP_ENV=production npx webpack
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
