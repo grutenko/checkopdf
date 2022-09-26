@@ -4,6 +4,8 @@
   "description": "![Build Status](https://gitlab.com/pages/plain-html/badges/master/build.svg)",
   "main": "index.js",
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d dist",
     "build": "APP_ENV=production webpack",
     "start": "webpack serve",
     "test": "jest --detectOpenHandles",
@@ -30,6 +32,7 @@
     "babel-loader": "^8.2.5",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
+    "gh-pages": "^4.0.0",
     "glob": "^8.0.3",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
