@@ -57,6 +57,7 @@ export function prepare( data: Data ): Fields {
         fields = fillOkopf_f22( fields, data);
         fields = fillOkved_f22( fields, data);
         fields = fillFns_f22( fields, data );
+        fields = fillCeo_f22( fields, data );
 
         fields = Object.assign(fields, {
             Text1: source.НаимПолн || source.ФИО,
@@ -65,7 +66,6 @@ export function prepare( data: Data ): Fields {
             Text4: source.ДатаРег,
             Text1130: source.ИНН,
             Text6: source.ИНН,
-            Text115: source.ИНН,
             Text2070: source.ИНН,
             Text21114: source.ОГРН || source.ОГРНИП,
             Text21115: source.ИНН,
@@ -86,6 +86,16 @@ export function prepare( data: Data ): Fields {
         }
     }
 
+    return fields;
+}
+
+function fillCeo_f22( fields: Fields, data: Data ): Fields {
+    if( Array.isArray( data.source.Руковод ) && data.source.Руковод.length > 0 ) {
+        const ceo = data.source.Руковод[0];
+        fields.Text1088 = ceo.НаимДолжн;
+        fields.Text109 = ceo.ФИО;
+        fields.Text1130 = ceo.ИНН;
+    }
     return fields;
 }
 
