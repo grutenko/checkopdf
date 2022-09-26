@@ -4,7 +4,7 @@
   "description": "![Build Status](https://gitlab.com/pages/plain-html/badges/master/build.svg)",
   "main": "index.js",
   "scripts": {
-    "predeploy": "yarn run build",
+    "predeploy": "yarn install",
     "deploy": "gh-pages -d dist",
     "build": "APP_ENV=production webpack",
     "start": "webpack serve",
