@@ -9,6 +9,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.15.0
+      - name: Write env file
+        env:
+          API_KEY: ${{secrets.API_KEY}}
       - run: yarn predeploy
       - run: yarn run build
       - name: Deploy
