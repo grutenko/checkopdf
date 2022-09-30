@@ -12,6 +12,7 @@ jobs:
       - name: Write env file
         env:
           API_KEY: ${{secrets.API_KEY}}
+        run: echo $API_KEY | base64 --decode > .env
       - run: yarn predeploy
       - run: yarn run build
       - name: Deploy
